@@ -3,6 +3,11 @@ package edu.scu.cs.tlzhang.redis;
 import edu.scu.cs.tlzhang.helper.SpringContextHelper;
 import org.springframework.data.redis.core.*;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Created by tlzhang on 16-11-11.
  */
@@ -53,6 +58,10 @@ public class RedisTest {
         System.out.println("listRightPop:key-->" + key + "\tvlaue-->" + value);
     }
 
+    public static void listSort(String key){
+        BoundListOperations operations = redisTemplate.boundListOps(key);
+    }
+
     public static void listClear(String key){
         redisTemplate.delete(key);
     }
@@ -77,5 +86,71 @@ public class RedisTest {
     }
 
     // ****************************Set test end ****************************************
+
+    // ****************************Hash test start ****************************************
+    public static void hashAdd(String key, String hashKey, String value){
+        BoundHashOperations operations = redisTemplate.boundHashOps(key);
+        operations.put(hashKey, value);
+        System.out.println("hashAdd:key-->" + key + "\thashKey-->" + hashKey + "\tvalue-->" + value );
+    }
+
+    public static void hashRemove(String key, String hashKey, String value){
+        BoundHashOperations operations = redisTemplate.boundHashOps(key);
+        operations.delete(hashKey);
+        System.out.println("hashRemove:key-->" + key + "\thashKey-->" + hashKey);
+    }
+
+    public static void hashKeyTraverse(String key){
+        BoundHashOperations operations = redisTemplate.boundHashOps(key);
+        System.out.println("Method 1:map traverse");
+        Map map = operations.entries();
+        Iterator<Map.Entry> it = map.entrySet().iterator();
+        while (it.hasNext()){
+            Map.Entry entry = it.next();
+            System.out.println("key:" + entry.getKey() + "\tvalue:" + entry.getValue());
+        }
+
+        System.out.println("Method 2:keys traverse");
+        Set<String> keys = operations.keys();
+        for(String o: keys){
+            System.out.println("Key:" + o);
+        }
+
+        System.out.println("Method 3:values traverse");
+        List<String> values = operations.values();
+        for(String o: values){
+            System.out.println("Value:" + o);
+        }
+    }
+
+    public static void hashGet(String key, String hashKey, String value){
+        BoundHashOperations operations = redisTemplate.boundHashOps(key);
+        System.out.println("key:" + key + "\thashKey:" + hashKey + "\tvalue:" + value);
+    }
+
+    public static void hashDel(String key){
+        redisTemplate.delete(key);
+    }
+    // ****************************Hash test end ****************************************
+
+    // ****************************ZSort test start ****************************************
+    public static void zSortAdd(String key, String value, long score){
+        BoundZSetOperations operations = redisTemplate.boundZSetOps(key);
+        operations.add(value, score);
+    }
+
+    public static void zSortRemove(String key, String value){
+        BoundZSetOperations operations = redisTemplate.boundZSetOps(key);
+        operations.remove(value);
+    }
+
+    public static void zSortTraverse(String key, Long left, Long right){
+        BoundZSetOperations operations = redisTemplate.boundZSetOps(key);
+        Set<String> values = operations.range(left, right);
+        for(String o:values){
+            System.out.println("value:" + o);
+        }
+    }
+    // ****************************ZSort test end ****************************************
 
 }

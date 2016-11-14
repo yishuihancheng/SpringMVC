@@ -67,7 +67,7 @@ public class RedisTestTest {
     @Test
     public void setAdd() throws Exception{
         String key = RedisTest.SET_PREFIX + "20161114:";
-        RedisTest.setAdd(key, "20161114");
+        RedisTest.setAdd(key, "20161117");
     }
 
     @Test
@@ -81,4 +81,55 @@ public class RedisTestTest {
         String key = RedisTest.SET_PREFIX + "20161114:";
         RedisTest.setDel(key);
     }
+
+
+    @Test
+    public void hashAdd() throws Exception{
+        String key = RedisTest.HASH_PREFIX + "20161115:";
+        String hashValue = "4";
+        RedisTest.hashAdd(key, hashValue, hashValue);
+    }
+
+    @Test
+    public void hashRemove() throws Exception{
+        String key = RedisTest.HASH_PREFIX + "20161115:";
+        String hashValue = "1";
+        RedisTest.hashRemove(key, hashValue, hashValue);
+    }
+
+    @Test
+    public void hashTraverse() throws Exception{
+        String key = RedisTest.HASH_PREFIX + "20161115:";
+        String hashValue = "1";
+        RedisTest.hashKeyTraverse(key);
+    }
+
+
+    @Test
+    public void zSortAdd() throws Exception{
+        String key = RedisTest.SORT_SET + "20161114:";
+        RedisTest.zSortAdd(key, "1", 1);
+        RedisTest.zSortAdd(key, "2", 2);
+        RedisTest.zSortAdd(key, "3", 3);
+        RedisTest.zSortAdd(key, "4", 4);
+        RedisTest.zSortAdd(key, "5", 5);
+        RedisTest.zSortAdd(key, "6", 6);
+        RedisTest.zSortAdd(key, "7", 7);
+        RedisTest.zSortAdd(key, "8", 8);
+        RedisTest.zSortAdd(key, "9", 9);
+        RedisTest.zSortAdd(key, "10", 10);
+    }
+
+    @Test
+    public void zSortRemove() throws Exception{
+        String key = RedisTest.SORT_SET + "20161114:";
+        RedisTest.zSortRemove(key, "2");
+    }
+
+    @Test
+    public void zSortTraverse() throws Exception{
+        String key = RedisTest.SORT_SET + "20161114:";
+        RedisTest.zSortTraverse(key, 1L, 9L);
+    }
+
 }
