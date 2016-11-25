@@ -131,6 +131,12 @@ public class RedisTest {
     public static void hashDel(String key){
         redisTemplate.delete(key);
     }
+
+    public static void putIfAbsent(String key, String hashKey, String hashValue){
+        BoundHashOperations operations = redisTemplate.boundHashOps(key);
+
+
+    }
     // ****************************Hash test end ****************************************
 
     // ****************************ZSort test start ****************************************
@@ -152,5 +158,16 @@ public class RedisTest {
         }
     }
     // ****************************ZSort test end ****************************************
+
+    // ****************************inc dec test start ****************************************
+    public static void inc(String key){
+        BoundValueOperations operations = redisTemplate.boundValueOps(key);
+        operations.increment(1);
+    }
+
+    public static void dec(String key){
+        BoundValueOperations operations = redisTemplate.boundValueOps(key);
+        operations.increment(-1);
+    }
 
 }
