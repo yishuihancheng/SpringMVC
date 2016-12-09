@@ -25,7 +25,7 @@ public class UserServiceTest extends TestCase {
     public void testInsertUser() throws Exception{
 //        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring_context.xml");
         User user = new User();
-        user.setName("tlzhang");
+        user.setName("tlzhang5");
         user.setPwd("123456");
         UserDAO userDAO = (UserDAO)SpringContextHelper.getBean("userDAO");
         if(userDAO == null){

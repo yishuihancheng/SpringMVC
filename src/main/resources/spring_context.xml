@@ -56,5 +56,6 @@
         <property name="enableTransactionSupport" value="true">
         </property>
     </bean>
+    <bean id="kRoomCommentService" class="edu.scu.cs.tlzhang.service.KRoomCommentService"/>
 
 </beans>
