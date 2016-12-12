@@ -10,6 +10,7 @@
 
     <context:component-scan base-package="edu.scu.cs.tlzhang.controller" />
     <context:component-scan base-package="edu.scu.cs.tlzhang.dao" />
+    <context:component-scan base-package="edu.scu.cs.tlzhang.service" />
     <context:property-placeholder location="classpath:settings.properties"/>
     <bean class="edu.scu.cs.tlzhang.helper.SpringContextHelper"></bean>
     <bean
