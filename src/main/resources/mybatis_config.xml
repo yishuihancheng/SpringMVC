@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
        <mappers>
-              <mapper resource="mapper/UserMapper.xml"/>
+           <mapper resource="edu/scu/cs/tlzhang/mybatis/dao/UserMapper.xml"/>
+           <mapper resource="edu/scu/cs/tlzhang/mybatis/dao/UserDao.xml"/>
        </mappers>
 </configuration>
