@@ -8,4 +8,8 @@ public class KRoomCommentService implements CommentService {
     public void comment() {
         System.out.println("KRoomCommentService");
     }
+
+    public void println(){
+        System.out.println("KRoomCommentService println");
+    }
 }

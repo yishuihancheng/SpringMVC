@@ -5,4 +5,5 @@ package edu.scu.cs.tlzhang.proxy.jdk_proxy.dynamic_proxy;
  */
 public interface BookFacade {
     public void addBook();
+    public void deleteBook();
 }

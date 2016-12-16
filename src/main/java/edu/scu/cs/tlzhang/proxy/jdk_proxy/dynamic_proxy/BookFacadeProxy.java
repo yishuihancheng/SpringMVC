@@ -60,8 +60,11 @@ public class BookFacadeProxy implements java.lang.reflect.InvocationHandler {
      */
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        System.out.println("invoke:proxy--" + this);
         Object result = null;
         System.out.println("事务开始");
+        System.out.println("method:" + method);
+//        System.out.println("args:" + args.toString());
         result = method.invoke(target, args);
         System.out.println("事务结束");
         return result;
