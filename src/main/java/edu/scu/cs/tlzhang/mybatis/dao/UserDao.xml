@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.scu.cs.tlzhang.mybatis.dao.UserDao">
+    <cache/>
+       <select id="findUserById" parameterType="int" resultType="edu.scu.cs.tlzhang.mybatis.entity.User">
+              select * from user where id = #{id}
+       </select>
+       <select id="findUserByName" parameterType="edu.scu.cs.tlzhang.mybatis.entity.User" resultType="edu.scu.cs.tlzhang.mybatis.entity.User">
+              select * from user where name like '%${name}%'
+       </select>
+       <insert id="insertUser" parameterType="edu.scu.cs.tlzhang.mybatis.entity.User">
+<!--              <selectKey keyProperty="id" order="AFTER" resultType="int">
+                   SELECT LAST_INSERT_ID()
+              </selectKey>-->
+              <selectKey keyProperty="uuid" order="BEFORE" resultType="java.lang.String">
+                     SELECT UUID()
+              </selectKey>
+              insert into user(uuid, name, address, gender, birthday) VALUES(#{uuid}, #{name}, #{address}, #{gender}, #{birthday})
+       </insert>
+       <delete id="deleteUser" parameterType="edu.scu.cs.tlzhang.mybatis.entity.User">
+              delete from user where id = #{id}
+       </delete>
+       <update id="updateUser" parameterType="edu.scu.cs.tlzhang.mybatis.entity.User" flushCache="false">
+              update user set name=#{name}, address=#{address}, gender=#{gender} where id=#{id}
+       </update>
+</mapper>

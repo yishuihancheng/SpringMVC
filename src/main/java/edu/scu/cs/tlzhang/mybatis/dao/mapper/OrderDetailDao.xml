@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.scu.cs.tlzhang.mybatis.dao.OrderDetailDao">
+    <select id="findById" parameterType="int" resultType="edu.scu.cs.tlzhang.mybatis.entity.Item">
+        select * from item where id = #{id}
+    </select>
+    <select id="findAll" resultType="edu.scu.cs.tlzhang.mybatis.entity.Item">
+        select * from item where id = #{id}
+    </select>
+    <select id="findUserOrder" resultType="edu.scu.cs.tlzhang.mybatis.entity.CustomOrder">
+        select order.*, user.name, user.gender, user.address from user order where order.uid = user.id
+    </select>
+    <insert id="insert" parameterType="edu.scu.cs.tlzhang.mybatis.entity.OrderDetail">
+        insert into order_detail(uuid, status, createAt, updateAt, orderId, itemId, itemCount)
+        values (#{uuid}, #{status}, #{createAt}, #{updateAt}, #{orderId}, #{itemId}, #{itemCount})
+    </insert>
+</mapper>

@@ -1,29 +1,27 @@
 package edu.scu.cs.tlzhang.entity;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
+public class Person {
+    private Long id;
 
-/**
- * Created by tlzhang on 2016/11/25.
- */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "person")
-public class Person implements Serializable{
-    @XmlAttribute
-    private String id;
-    @XmlAttribute
     private String name;
-    @XmlAttribute
+
     private Integer age;
 
-    public String getId() {
+    public Person(Long id, String name, Integer age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
+
+    public Person() {
+        super();
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -32,7 +30,7 @@ public class Person implements Serializable{
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name == null ? null : name.trim();
     }
 
     public Integer getAge() {

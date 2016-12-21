@@ -14,7 +14,7 @@ public class SerializationTestTest extends TestCase {
     @Test
     public void testJdkSerization() throws Exception {
         Person person = new Person();
-        person.setId("1");
+        person.setId(1L);
         person.setName("jdk");
         person.setAge(18);
         SerializationTest.jdkSerization(person);
@@ -23,7 +23,7 @@ public class SerializationTestTest extends TestCase {
     @Test
     public void testStrSerialization() throws Exception {
         Person person = new Person();
-        person.setId("2");
+        person.setId(2L);
         person.setName("string");
         person.setAge(18);
         SerializationTest.strSerialization(person);
@@ -33,7 +33,7 @@ public class SerializationTestTest extends TestCase {
     public void testJacksonSerialization() throws Exception {
         Person person = new Person();
         person.setAge(19);
-        person.setId("3");
+        person.setId(3L);
         person.setName("jackson");
         SerializationTest.jacksonSerialization(person);
     }
@@ -42,7 +42,7 @@ public class SerializationTestTest extends TestCase {
     public void testXmlSerialization() throws Exception {
         Person person = new Person();
         person.setAge(20);
-        person.setId("4");
+        person.setId(4L);
         person.setName("xml");
         SerializationTest.xmlSerialization(person);
     }

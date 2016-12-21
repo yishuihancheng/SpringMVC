@@ -9,9 +9,10 @@
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
     <context:component-scan base-package="edu.scu.cs.tlzhang.controller" />
-    <context:component-scan base-package="edu.scu.cs.tlzhang.dao" />
     <context:component-scan base-package="edu.scu.cs.tlzhang.service" />
     <context:property-placeholder location="classpath:settings.properties"/>
+    <context:component-scan base-package="edu.scu.cs.tlzhang.mybatis.dao" />
+    <context:component-scan base-package="edu.scu.cs.tlzhang.dao" />
     <bean class="edu.scu.cs.tlzhang.helper.SpringContextHelper"></bean>
     <bean
             class="org.springframework.web.servlet.view.InternalResourceViewResolver">

@@ -3,8 +3,23 @@
         "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <settings>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+    <typeAliases>
+        <!--<typeAlias type="edu.scu.cs.tlzhang.mybatis.entity.User"/>-->
+        <package name="edu.scu.cs.tlzhang.mybatis.entity"/>
+    </typeAliases>
        <mappers>
            <mapper resource="edu/scu/cs/tlzhang/mybatis/dao/UserMapper.xml"/>
            <mapper resource="edu/scu/cs/tlzhang/mybatis/dao/UserDao.xml"/>
+           <mapper resource="edu/scu/cs/tlzhang/mybatis/dao/mapper/ItemDao.xml"/>
+           <mapper resource="edu/scu/cs/tlzhang/mybatis/dao/mapper/OrderDao.xml"/>
+           <mapper resource="edu/scu/cs/tlzhang/mybatis/dao/mapper/OrderDetailDao.xml"/>
+           <!--<package name="edu.scu.cs.tlzhang.mybatis.dao" />-->
+           <!--<package name="edu.scu.cs.tlzhang.mybatis.dao.mapper"/>-->
+
        </mappers>
 </configuration>

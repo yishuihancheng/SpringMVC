@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.scu.cs.tlzhang.mybatis.dao.OrderDao">
+       <resultMap id="orderResultMap" type="edu.scu.cs.tlzhang.mybatis.entity.Order">
+              <id column="id" property="id"/>
+              <result column="uuid" property="uuid"/>
+              <result column="status" property="status"/>
+              <result column="createAt" property="createAt"/>
+              <result column="updateAt" property="updateAt"/>
+              <association property="user" javaType="edu.scu.cs.tlzhang.mybatis.entity.User">
+                     <id column="user_id" property="id"/>
+                     <result column="name" property="name"/>
+                     <result column="address" property="address"/>
+                     <result column="gender" property="gender"/>
+              </association>
+       </resultMap>
+       <!-- 可以继承orderResultMap-->
+       <resultMap id="orderDetailResultMap" type="edu.scu.cs.tlzhang.mybatis.entity.Order" extends="orderResultMap">
+              <collection property="orderDetails" ofType="edu.scu.cs.tlzhang.mybatis.entity.OrderDetail">
+                     <id column="order_detail_id" property="id"/>
+                     <result column="orderId" property="orderId"/>
+                     <result column="itemId" property="itemId"/>
+                     <result column="itemCount" property="itemCount"/>
+              </collection>
+       </resultMap>
+       <resultMap id="userAndItemsResultMap" type="edu.scu.cs.tlzhang.mybatis.entity.UserAndItem">
+              <id column="user_id" property="id"/>
+              <result column="user_uuid" property="uuid"/>
+              <result column="user_status" property="status"/>
+              <result column="user_createAt" property="createAt"/>
+              <result column="user_updateAt" property="updateAt"/>
+              <result column="user_name" property="name"/>
+              <result column="user_address" property="address"/>
+              <result column="user_gender" property="gender"/>
+              <result column="user_birthday" property="birthday"/>
+              <collection property="orderList" ofType="edu.scu.cs.tlzhang.mybatis.entity.Order">
+                     <id column="order_id" property="id"/>
+                     <result column="order_uid" property="uid"/>
+                     <collection property="orderDetails" ofType="edu.scu.cs.tlzhang.mybatis.entity.OrderDetail">
+                            <id column="order_detail_id" property="id"/>
+                            <result column="orderId" property="orderId"/>
+                            <result column="itemId" property="itemId"/>
+                            <result column="itemCount" property="itemCount"/>
+                            <association property="item" javaType="edu.scu.cs.tlzhang.mybatis.entity.Item">
+                                   <id column="item_id" property="id"/>
+                                   <result column="item_name" property="name"/>
+                                   <result column="item_price" property="price"/>
+                                   <result column="item_detail" property="detail"/>
+                            </association>
+                     </collection>
+              </collection>
+       </resultMap>
+       <resultMap id="ordersUserResultMap" type="edu.scu.cs.tlzhang.mybatis.entity.Order">
+              <id column="id" property="id"/>
+              <result column="uuid" property="uuid"/>
+              <result column="createAt" property="createAt"/>
+              <result column="uid" property="uid"/>
+              <!--
+              select 指定加载所需要执行的statement 的id
+              column 订单信息中关联用户信息的列
+
+              -->
+              <association property="user" javaType="edu.scu.cs.tlzhang.mybatis.entity.User" select="edu.scu.cs.tlzhang.mybatis.dao.findUserById"
+                           column="id">
+                     <!--<id column="user_id" property="id"/>
+                     <result column="name" property="name"/>
+                     <result column="address" property="address"/>
+                     <result column="gender" property="gender"/>
+                     <result column="birthday" property="birthday"/>-->
+              </association>
+       </resultMap>
+       <select id="findById" parameterType="int" resultType="edu.scu.cs.tlzhang.mybatis.entity.Item">
+              select * from item where id = #{id}
+       </select>
+       <select id="findAll" resultType="edu.scu.cs.tlzhang.mybatis.entity.Item">
+              select * from item where id = #{id}
+       </select>
+       <select id="findUserOrder" resultType="edu.scu.cs.tlzhang.mybatis.entity.CustomOrder">
+              select order_t.*, user.name, user.gender, user.address from user,order_t where order_t.uid = user.id
+       </select>
+       <select id="findUserOrderResultMap" resultMap="orderResultMap">
+              select order_t.*, user.id user_id,user.name, user.gender, user.address from user,order_t where order_t.uid = user.id
+       </select>
+       <select id="findUserOrderDetailResultMap" resultMap="orderDetailResultMap">
+              select order_t.*,
+              user.id user_id,user.name, user.gender, user.address,
+              order_detail.id order_detail_id, order_detail.orderId, order_detail.itemId, order_detail.itemCount
+              from
+              user,order_t, order_detail where order_t.uid = user.id and order_detail.orderId = order_t.id
+       </select>
+       <select id="findUserAndItems" resultMap="userAndItemsResultMap">
+              select user.id user_id, user.uuid user_uuid, user.status user_status, user.createAt user_createAt,
+              user.updateAt user_updateAt, user.name user_name,
+              user.gender user_gender, user.address user_address, user.birthday user_birthday,
+              order_t.id order_id, order_t.uid order_uid,
+              order_detail.id order_detail_id, order_detail.orderId, order_detail.itemId,order_detail.itemCount,
+              item.id item_id, item.name item_name, item.price item_price, item.detail item_detail
+              from
+              user, order_t, order_detail, item
+              where
+              order_t.uid = user.id and order_detail.orderId = order_t.id and order_detail.itemId = item.id
+       </select>
+       <!-- 查询订单需要关联查询用户，用户信息需要延迟加载 -->
+       <select id="findOrdersUserLazyLoding" resultMap="ordersUserResultMap">
+              select * from order_t
+       </select>
+       <insert id="insert" parameterType="edu.scu.cs.tlzhang.mybatis.entity.Order">
+              insert into order_t(uuid, status, createAt, updateAt, uid)
+              values(#{uuid}, #{status}, #{createAt}, #{updateAt}, #{uid})
+       </insert>
+</mapper>
